@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dave Lanza Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!--
+  ============================================================
+  SITE CONTENT: edit this block only. Everything below it is code.
+  - photos: { "caption": "...", "src": "images/file.jpg" }  (no src = placeholder tile)
+  - body: list of paragraphs
+  - ids: lowercase letters, digits, hyphens (used in share links like #p-parallax)
+  ============================================================
+-->
+<script id="site-data" type="application/json">
+{
+  "name": "Dave Lanza",
+  "pitch": "Robotics · Fabrication · Software",
+  "intro": [
+    "I design and build hardware and software: computer-vision interfaces, fabricated parts, and the tools that connect them.",
+    "My background is in manufacturing process engineering and custom sign fabrication. I also co-coach a high school robotics team. I'm applying to WPI's robotics master's program."
+  ],
+  "portrait": { "caption": "Portrait" },
+  "featured": ["pointing-ui", "parallax", "blade"],
+  "contact": {
+    "email": "you@example.com",
+    "linkedin": "linkedin.com/in/your-name",
+    "github": "github.com/your-name"
+  },
+  "about": [
+    "I'm Dave Lanza, an engineer and maker based in Westchester County, New York.",
+    "I started as a process engineer at a manufacturing plant, using production data to decide which process changes and redesigns were worth pursuing. Since then I've worked at Lanza Corp, a custom signage fabrication and installation company, where [describe your role].",
+    "Outside work I build computer-vision projects in Python, forge blades, and co-coach my former high school's robotics team.",
+    "[Why robotics, why WPI, and what you want to work on.]"
+  ],
+  "resume": {
+    "pdf": "resume.pdf",
+    "sections": [
+      { "title": "Experience", "items": [
+        { "what": "[Title], Lanza Corp", "when": "[Year]–present", "detail": "Custom signage fabrication and installation: ADA signage, UV printing, laser engraving. [Add 2–3 results.]" },
+        { "what": "Process Engineer, [Company]", "when": "[Year]–2020", "detail": "Used production data to choose which process levers and redesigns to pursue across the line. [Add 2–3 results.]" },
+        { "what": "Robotics Coach, Salesian [School]", "when": "[Year]–present", "detail": "Co-coach the team with its founding teacher since the team started." }
+      ]},
+      { "title": "Education", "items": [
+        { "what": "[Degree, Major], Rochester Institute of Technology", "when": "[Year]", "detail": "" }
+      ]},
+      { "title": "Skills", "items": [
+        { "what": "Software", "when": "", "detail": "Python, OpenCV, pygame, Godot / GDScript, [CAD tools]" },
+        { "what": "Fabrication", "when": "", "detail": "Laser engraving, UV printing, 3D printing, forging and heat treatment, electronics prototyping" }
+      ]}
+    ]
+  },
+  "projects": [
+    {
+      "id": "pointing-ui",
+      "title": "Projected Pointing Interface",
+      "tagline": "A wall-sized interface driven by pointing, tracked with two webcams.",
+      "tags": ["Computer vision", "Python", "HCI"],
+      "photos": [{ "caption": "Projector and stereo webcam rig" }, { "caption": "Interface projected on the wall" }],
+      "chapters": [
+        {
+          "title": "Concept and goals",
+          "summary": "Turn any wall into a large display you control by pointing at it, with no touch surface or handheld device.",
+          "body": [
+            "Large projected displays are usually driven with a mouse or a presenter remote, which separates the person from what they are pointing at. The goal was a general-purpose interface where pointing at the wall is the input.",
+            "Constraints: off-the-shelf webcams and a consumer projector, everything in Python, and a frame rate high enough that the cursor feels attached to the pointer. [Add your specific requirements and targets.]"
+          ],
+          "photos": []
+        },
+        {
+          "title": "Stereo pointer tracking",
+          "summary": "Two webcams see the pointer from different angles. Triangulating the two views gives its position and direction in 3D.",
+          "body": [
+            "Each camera detects the pointer in its own image. With both cameras calibrated, matching detections give two rays in space, and their closest point gives the pointer tip in 3D. Two points along the pointer give its direction.",
+            "Intersecting that direction with the wall plane gives the spot being pointed at, which becomes the cursor. [Describe the detection method, filtering, and how you handled noise and occlusion.]"
+          ],
+          "photos": [{ "caption": "Camera views with detected pointer" }, { "caption": "Triangulation diagram" }]
+        },
+        {
+          "title": "Calibrating cameras to the projector",
+          "summary": "A calibration step maps the wall plane into projector pixels, so the cursor lands where the user points.",
+          "body": [
+            "The projector displays known targets on the wall. Locating them in both cameras ties camera space to projector pixels and defines the wall plane.",
+            "[Explain the calibration routine, how long it takes, and how well it holds up when the rig is bumped.]"
+          ],
+          "photos": [{ "caption": "Calibration pattern on the wall" }]
+        },
+        {
+          "title": "Interface and results",
+          "summary": "A fullscreen pygame interface responds to the tracked pointer. [Add accuracy and latency results.]",
+          "body": [
+            "The interface is drawn fullscreen in pygame and sent through the projector. [Describe how selection works, e.g. dwell or gesture.]",
+            "[Add measured pointing accuracy, latency, and what you would change in a second version.]"
+          ],
+          "photos": [{ "caption": "Demo screenshot" }]
+        }
+      ]
+    },
+    {
+      "id": "parallax",
+      "title": "Head-Tracked Parallax Window",
+      "tagline": "A phone screen that behaves like a window, using the front camera to track the viewer's eyes.",
+      "tags": ["Computer vision", "Graphics", "Android"],
+      "photos": [{ "caption": "Model appearing behind the screen" }],
+      "chapters": [
+        {
+          "title": "The idea",
+          "summary": "Render a 3D scene from the viewer's actual eye position so the screen looks like a window into a box.",
+          "body": [
+            "A normal 3D render assumes the viewer sits at a fixed point in front of the screen. If the render instead follows the viewer's real eye position, motion parallax makes objects appear to sit behind the glass.",
+            "The target platform was an Android phone running Python, so the whole pipeline had to run on the device."
+          ],
+          "photos": []
+        },
+        {
+          "title": "Eye tracking with the front camera",
+          "summary": "The front camera estimates the eye position in 3D, relative to the screen, every frame.",
+          "body": [
+            "Face and eye landmarks give the eye position in the image. Distance comes from the apparent spacing between the eyes. [Describe the library, smoothing, and frame rate you reached.]"
+          ],
+          "photos": [{ "caption": "Front-camera tracking overlay" }]
+        },
+        {
+          "title": "Off-axis projection",
+          "summary": "An asymmetric view frustum through the screen's edges renders the scene correctly for an off-center viewer.",
+          "body": [
+            "With the eye position known, the screen rectangle becomes the near plane of an asymmetric frustum. This off-axis projection is what makes the effect convincing; simply moving a centered perspective camera gives the wrong result.",
+            "The renderer is written in pygame. [Explain how you implemented the projection and drew the model.]"
+          ],
+          "photos": [{ "caption": "Frustum geometry sketch" }, { "caption": "Render at two viewer positions" }]
+        }
+      ]
+    },
+    {
+      "id": "desk-piano",
+      "title": "Projected Desk Piano",
+      "tagline": "A projector and webcam turn the edge of a desk into a playable keyboard.",
+      "tags": ["Computer vision", "Audio", "Python"],
+      "photos": [{ "caption": "Keyboard projected on the desk edge" }],
+      "chapters": [
+        {
+          "title": "Setup",
+          "summary": "A projector draws piano keys along the desk edge while a webcam watches the same strip.",
+          "body": [
+            "The projector and camera are mounted above the desk and aimed at its front edge. The keys are drawn to fit the desk's real width. [Add mounting details.]"
+          ],
+          "photos": [{ "caption": "Projector and camera mount" }]
+        },
+        {
+          "title": "Detecting key presses",
+          "summary": "The camera finds fingertips touching the desk and maps them to keys.",
+          "body": [
+            "Each frame, the system finds fingertips in the key strip and decides whether each one is touching the surface or hovering. A press is reported when a fingertip lands on a key. [Describe the touch test and how you handled shadows from the projector.]"
+          ],
+          "photos": []
+        },
+        {
+          "title": "Sound and latency",
+          "summary": "Key presses trigger notes. [Add measured latency.]",
+          "body": [
+            "[Describe how notes are generated, how many keys can sound at once, and the end-to-end latency from touch to sound.]"
+          ],
+          "photos": []
+        }
+      ]
+    },
+    {
+      "id": "blade",
+      "title": "Clay-Quenched Blade",
+      "tagline": "Differential hardening for curvature (sori) and a visible temper line (hamon).",
+      "tags": ["Materials", "Metalwork", "Heat treatment"],
+      "photos": [{ "caption": "Finished blade" }, { "caption": "Hamon after etching" }],
+      "chapters": [
+        {
+          "title": "Goal",
+          "summary": "Use a clay coating to harden the edge while leaving the spine softer, producing both curve and hamon.",
+          "body": [
+            "In a clay quench, a thick clay layer insulates the spine while a thin layer covers the edge. During the quench the edge cools fast and hardens; the spine cools slower and stays tougher. The different volume change in the two zones bends the blade, giving it sori.",
+            "The boundary between the zones shows as the hamon after polishing and etching."
+          ],
+          "photos": []
+        },
+        {
+          "title": "Steel selection",
+          "summary": "Moved from 1085 to W2, a shallow-hardening steel better suited to a strong hamon.",
+          "body": [
+            "The first attempts used 1085. W2 hardens more shallowly, which gives a sharper difference between edge and spine and a more active hamon. [Add your results with each steel.]"
+          ],
+          "photos": []
+        },
+        {
+          "title": "Clay and quench process",
+          "summary": "[Summarize clay mix, layer thickness, temperature, and quenchant.]",
+          "body": [
+            "[Describe the clay mix, application pattern, heating method, temperature control, and quenchant.]"
+          ],
+          "photos": [{ "caption": "Clay layout before heating" }, { "caption": "Quench" }]
+        },
+        {
+          "title": "Lessons",
+          "summary": "[What went wrong, what you measured, and what you changed.]",
+          "body": [
+            "[Cracks, warps, and corrections between attempts.]"
+          ],
+          "photos": []
+        }
+      ]
+    },
+    {
+      "id": "coaching",
+      "title": "High School Robotics Coaching",
+      "tagline": "Co-coaching Salesian's robotics team since it was founded.",
+      "tags": ["Robotics", "Teaching"],
+      "photos": [{ "caption": "Team at competition" }],
+      "chapters": [
+        {
+          "title": "Starting the team",
+          "summary": "Helped start the team about four years ago, alongside my former teacher.",
+          "body": [
+            "[Describe how the team started, which competition program it competes in, and team size.]"
+          ],
+          "photos": []
+        },
+        {
+          "title": "How I coach",
+          "summary": "[Summarize your approach: design reviews, letting students lead, safety.]",
+          "body": [
+            "[Describe what you teach directly and what you leave students to figure out.]"
+          ],
+          "photos": [{ "caption": "Build session" }]
+        },
+        {
+          "title": "Seasons and results",
+          "summary": "[Robots built and results by season.]",
+          "body": [
+            "[One short entry per season: the challenge, the robot's main mechanism, and the result.]"
+          ],
+          "photos": [{ "caption": "Robot from a recent season" }]
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+:root {
+  /* Layout: sticky top bar; portfolio = one column of project cards, each with its own controls */
+  --bg: #f6f6f5;
+  --surface: #ffffff;
+  --ink: #151515;
+  --ink-2: #5a5a5a;
+  --ink-3: #8c8c8a;
+  --line: #dcdcda;
+  --fill: #ececea;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --header-h: 56px;
+  --radius: 4px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-padding-top: calc(var(--header-h) + 80px); }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.6 var(--font-body);
+}
+h1, h2, h3 { line-height: 1.2; text-wrap: balance; margin: 0; font-weight: 600; }
+p { margin: 0; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.mono { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .02em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+@media (max-width: 500px) { .wrap { padding: 0 16px; } }
+
+/* ---------- Top bar ---------- */
+.topbar { position: sticky; top: 0; z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); }
+.topbar .wrap { height: var(--header-h); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { font-weight: 600; text-decoration: none; letter-spacing: .01em; }
+.nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.nav a, .nav button { text-decoration: none; padding: 6px 10px; border-radius: var(--radius); color: var(--ink-2); font-size: 15px; }
+.nav a:hover, .nav button:hover { color: var(--ink); background: var(--fill); }
+.nav a[aria-current="page"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); border-radius: 0; }
+@media (max-width: 560px) { .brand { display: none; } .nav { width: 100%; justify-content: space-between; } }
+
+main { padding: 40px 0 72px; }
+
+/* ---------- Buttons and segmented controls ---------- */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--ink); border-radius: var(--radius); text-decoration: none; font-weight: 500; font-size: 15px; }
+.btn.primary { background: var(--ink); color: var(--surface); }
+.btn:hover { background: var(--fill); }
+.btn.primary:hover { background: #333; }
+.btn.small { padding: 4px 10px; font-size: 13.5px; border-color: var(--line); font-weight: 400; }
+.btn.small:hover { border-color: var(--ink-3); }
+.btn[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); flex-wrap: wrap; }
+.seg button { padding: 5px 12px; font-size: 14px; color: var(--ink-2); border-right: 1px solid var(--line); }
+.seg button:last-child { border-right: 0; }
+.seg button:hover { background: var(--fill); color: var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+.seg.small button { padding: 2px 9px; font-size: 12.5px; }
+
+/* ---------- Photos ---------- */
+.photo {
+  display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--line); position: relative;
+  background: repeating-linear-gradient(135deg, var(--fill) 0 8px, #e3e3e1 8px 16px);
+}
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo .ph { position: absolute; inset: auto 8px 8px auto; font: 500 10.5px var(--font-mono); letter-spacing: .08em; color: var(--ink-3); }
+.photo:hover { border-color: var(--ink-3); }
+figure { margin: 0; display: grid; gap: 6px; }
+figcaption { font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+
+/* ---------- Home ---------- */
+.hero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 6vw, 56px); letter-spacing: -.02em; }
+.hero .pitch { margin: 10px 0 24px; font-size: 14px; }
+.hero .intro { display: grid; gap: 14px; max-width: 58ch; font-size: 17px; color: var(--ink-2); }
+.hero .actions { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; }
+.hero .photo { aspect-ratio: 4 / 5; max-width: 360px; justify-self: end; }
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; } .hero .photo { justify-self: start; max-width: 260px; } }
+
+.section-head { display: flex; justify-content: space-between; align-items: baseline; margin: 64px 0 18px; border-top: 1px solid var(--line); padding-top: 20px; gap: 16px; }
+.section-head h2 { font-size: 22px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; display: grid; gap: 10px; text-decoration: none; align-content: start; }
+.card:hover { border-color: var(--ink); }
+.card .photo { pointer-events: none; }
+.card h3 { font-size: 18px; }
+.card p { color: var(--ink-2); font-size: 15px; }
+
+/* ---------- Simple pages ---------- */
+.page h1 { font-size: 36px; margin-bottom: 24px; letter-spacing: -.01em; }
+.prose { display: grid; gap: 16px; max-width: 65ch; font-size: 17px; }
+.resume-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+.resume-top h1 { margin: 0; }
+.cv-section { margin-top: 36px; max-width: 820px; }
+.cv-section h2 { font-size: 13px; font-family: var(--font-mono); font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 14px; }
+.cv-item { display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; padding: 8px 0; }
+.cv-item .what { font-weight: 500; }
+.cv-item .detail { grid-column: 1 / -1; color: var(--ink-2); font-size: 15px; }
+.note { font-size: 14px; color: var(--ink-2); }
+
+/* ---------- Portfolio ---------- */
+.sample { font-size: 13.5px; color: var(--ink-2); background: var(--fill); border-radius: var(--radius); padding: 8px 12px; margin-bottom: 20px; max-width: 900px; }
+.projects { display: grid; gap: 20px; max-width: 900px; }
+.project { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+.p-head { display: grid; gap: 8px; min-width: 0; }
+.p-title { font-size: 22px; font-weight: 600; text-align: left; display: flex; gap: 10px; align-items: baseline; }
+.p-title .caret { font: 500 14px var(--font-mono); color: var(--ink-3); width: 1ch; flex: none; }
+.p-title:hover .t { text-decoration: underline; text-underline-offset: 3px; }
+.tagline { color: var(--ink-2); }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-size: 12px; padding: 1px 8px; border-radius: 999px; background: var(--fill); color: var(--ink-2); }
+
+.stats { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; }
+.meters { display: grid; grid-template-columns: auto 120px; gap: 3px 8px; align-items: center; }
+.meter { height: 5px; background: var(--fill); border-radius: 3px; overflow: hidden; }
+.meter span { display: block; height: 100%; background: var(--ink-2); }
+.meters .mono { font-size: 11px; color: var(--ink-3); }
+
+.p-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--fill); }
+.linkish { font-size: 14px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+.linkish:hover { color: var(--ink); }
+
+.p-gallery { margin-top: 20px; }
+.chapters { list-style: none; margin: 20px 0 0; padding: 0; display: grid; }
+.chapter { border-top: 1px solid var(--line); padding: 14px 0; display: grid; gap: 10px; }
+.chapter:last-child { padding-bottom: 0; }
+.c-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.c-num { font: 500 12px var(--font-mono); color: var(--ink-3); width: 2.5ch; }
+.c-title { font-size: 17px; font-weight: 500; flex: 1 1 240px; }
+.c-summary { color: var(--ink-2); max-width: 68ch; padding-left: calc(2.5ch + 14px); }
+.c-body { display: grid; gap: 12px; max-width: 68ch; padding-left: calc(2.5ch + 14px); }
+.chapter .gallery { padding-left: calc(2.5ch + 14px); }
+@media (max-width: 600px) { .c-summary, .c-body, .chapter .gallery { padding-left: 0; } }
+.empty { padding: 32px; text-align: center; color: var(--ink-2); }
+
+/* ---------- Footer / contact ---------- */
+footer { border-top: 1px solid var(--line); background: var(--surface); padding: 28px 0 36px; }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px 32px; }
+footer h2 { font: 500 12px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+.contact-list { display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 15px; }
+.contact-list span { color: var(--ink-3); margin-right: 6px; font-size: 13px; }
+
+/* ---------- Lightbox ---------- */
+.lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(20,20,20,.82); display: none; align-items: center; justify-content: center; padding: 24px; }
+.lightbox.open { display: flex; }
+.lb-inner { width: min(900px, 100%); display: grid; gap: 12px; }
+.lb-inner .photo { cursor: default; background-color: var(--fill); }
+.lb-bar { display: flex; align-items: center; gap: 12px; color: #eee; }
+.lb-bar .cap { flex: 1; font-size: 15px; }
+.lb-bar button { color: #fff; border: 1px solid #777; border-radius: var(--radius); padding: 4px 12px; }
+.lb-bar button:hover { border-color: #fff; }
+
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#home" id="brand"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#home" data-view="home">Home</a>
+      <a href="#portfolio" data-view="portfolio">Portfolio</a>
+      <a href="#resume" data-view="resume">Resume</a>
+      <a href="#about" data-view="about">About</a>
+      <button type="button" data-action="contact">Contact</button>
+    </nav>
+  </div>
+</header>
+
+<main><div class="wrap" id="app"></div></main>
+
+<footer id="contact">
+  <div class="wrap" id="footer"></div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer"></div>
+
+<script>
+/* ============================================================
+   DATA + DERIVED STATS
+   ============================================================ */
+const DATA = JSON.parse(document.getElementById('site-data').textContent);
+const LEVELS = [[0, 'Title only'], [1, 'Summaries'], [2, 'Full text']];
+const WORDS_PER_MIN = 230;
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const countWords = s => (String(s).match(/\S+/g) || []).length;
+const fmt = n => n.toLocaleString('en-US');
+const plural = (n, word) => `${fmt(n)} ${word}${n === 1 ? '' : 's'}`;
+
+// Precompute per-project photo lists and stats once.
+for (const p of DATA.projects) {
+  p.allPhotos = [...p.photos];
+  p.words = countWords(p.title + ' ' + p.tagline);
+  p.chapters.forEach((c, i) => {
+    c.index = i;
+    c.photoOffset = p.allPhotos.length;
+    p.allPhotos.push(...c.photos);
+    c.words = countWords([c.title, c.summary, ...c.body].join(' '));
+    p.words += c.words;
+  });
+  p.minutes = Math.max(1, Math.round(p.words / WORDS_PER_MIN));
+}
+const MAX_WORDS = Math.max(...DATA.projects.map(p => p.words));
+const MAX_PHOTOS = Math.max(1, ...DATA.projects.map(p => p.allPhotos.length));
+const findProject = id => DATA.projects.find(p => p.id === id);
+
+/* ============================================================
+   VIEW STATE
+   Each project card has its own view: detail level (0-2) and
+   whether photos show. Photos are on by default, and choosing
+   "Full text" always turns them back on.
+   ============================================================ */
+const state = { view: 'home' };
+const DEFAULT_CARD = { level: 0, photos: true };
+const cards = {};   // project id -> { level, photos }
+const cardOf = p => (cards[p.id] ??= { ...DEFAULT_CARD });
+
+function setLevel(p, level) {
+  const c = cardOf(p);
+  c.level = level;
+  if (level === 2) c.photos = true;
+}
+
+/* ============================================================
+   SMALL RENDER HELPERS
+   ============================================================ */
+function segmented(options, active, attrs, cls = '', label = '') {
+  return `<div class="seg ${cls}" role="group" aria-label="${esc(label)}">` +
+    options.map(([value, text]) =>
+      `<button type="button" ${attrs} data-level="${value}" aria-pressed="${value === active}">${text}</button>`
+    ).join('') + '</div>';
+}
+
+function photoTile(p, idx, withCaption = true) {
+  const ph = p.allPhotos[idx];
+  const inner = ph.src ? `<img src="${esc(ph.src)}" alt="${esc(ph.caption)}">` : `<span class="ph">PHOTO</span>`;
+  const tile = `<button type="button" class="photo" data-action="photo" data-pid="${p.id}" data-idx="${idx}" aria-label="View photo: ${esc(ph.caption)}">${inner}</button>`;
+  return withCaption ? `<figure>${tile}<figcaption>${esc(ph.caption)}</figcaption></figure>` : tile;
+}
+
+// Non-interactive cover, for use inside links (home cards).
+function coverImage(p) {
+  const ph = p.photos[0];
+  return `<div class="photo" role="img" aria-label="${esc(ph.caption)}">${
+    ph.src ? `<img src="${esc(ph.src)}" alt="">` : '<span class="ph">PHOTO</span>'}</div>`;
+}
+
+function gallery(p, start, count, cls = '') {
+  if (!count) return '';
+  let html = '';
+  for (let i = start; i < start + count; i++) html += photoTile(p, i);
+  return `<div class="gallery ${cls}">${html}</div>`;
+}
+
+function statsLine(p) {
+  return `<div class="stats">
+    <span class="mono">${plural(p.chapters.length, 'chapter')} · ${plural(p.words, 'word')} · ~${p.minutes} min · ${plural(p.allPhotos.length, 'photo')}</span>
+    <div class="meters" title="Amount of content compared with the largest project">
+      <span class="mono">TEXT</span><div class="meter"><span style="width:${Math.round(100 * p.words / MAX_WORDS)}%"></span></div>
+      <span class="mono">PHOTOS</span><div class="meter"><span style="width:${Math.round(100 * p.allPhotos.length / MAX_PHOTOS)}%"></span></div>
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+function renderHome() {
+  const cards = DATA.featured.map(findProject).filter(Boolean).map(p => `
+    <a class="card" href="#p-${p.id}">
+      ${p.photos.length ? coverImage(p) : ''}
+      <h3>${esc(p.title)}</h3>
+      <p>${esc(p.tagline)}</p>
+      <span class="mono">${plural(p.chapters.length, 'chapter')} · ${plural(p.allPhotos.length, 'photo')}</span>
+    </a>`).join('');
+
+  return `
+    <section class="hero">
+      <div>
+        <h1>${esc(DATA.name)}</h1>
+        <p class="pitch mono">${esc(DATA.pitch)}</p>
+        <div class="intro">${DATA.intro.map(t => `<p>${esc(t)}</p>`).join('')}</div>
+        <div class="actions">
+          <a class="btn primary" href="#portfolio">View portfolio</a>
+          <a class="btn" href="#resume">Resume</a>
+        </div>
+      </div>
+      <div class="photo" role="img" aria-label="${esc(DATA.portrait.caption)}">${
+        DATA.portrait.src ? `<img src="${esc(DATA.portrait.src)}" alt="">` : '<span class="ph">PORTRAIT</span>'}</div>
+    </section>
+    <div class="section-head"><h2>Selected projects</h2><a class="linkish" href="#portfolio">All ${DATA.projects.length} projects</a></div>
+    <div class="cards">${cards}</div>`;
+}
+
+function renderAbout() {
+  return `<section class="page"><h1>About</h1>
+    <div class="prose">${DATA.about.map(t => `<p>${esc(t)}</p>`).join('')}</div></section>`;
+}
+
+function renderResume() {
+  const r = DATA.resume;
+  const sections = r.sections.map(s => `
+    <section class="cv-section"><h2>${esc(s.title)}</h2>
+      ${s.items.map(it => `<div class="cv-item">
+        <span class="what">${esc(it.what)}</span><span class="mono">${esc(it.when)}</span>
+        ${it.detail ? `<span class="detail">${esc(it.detail)}</span>` : ''}
+      </div>`).join('')}
+    </section>`).join('');
+  return `<section class="page">
+    <div class="resume-top"><h1>Resume</h1><a class="btn" href="${esc(r.pdf)}">Download PDF</a></div>
+    <p class="note">On the live site, the PDF button links to your resume file.</p>
+    ${sections}</section>`;
+}
+
+function renderChapter(p, c, card) {
+  return `<li class="chapter" id="p-${p.id}-c${c.index + 1}">
+    <div class="c-head">
+      <span class="c-num">${String(c.index + 1).padStart(2, '0')}</span>
+      <h3 class="c-title">${esc(c.title)}</h3>
+      <span class="mono">${plural(c.words, 'word')}${c.photos.length ? ' · ' + plural(c.photos.length, 'photo') : ''}</span>
+    </div>
+    <p class="c-summary">${esc(c.summary)}</p>
+    ${card.level === 2 ? `<div class="c-body">${c.body.map(t => `<p>${esc(t)}</p>`).join('')}</div>` : ''}
+    ${card.photos ? gallery(p, c.photoOffset, c.photos.length) : ''}
+  </li>`;
+}
+
+function renderProject(p) {
+  const card = cardOf(p);
+  // Title only: one gallery of every photo. Otherwise: project photos here, chapter photos inside chapters.
+  const photoBlock = !card.photos ? ''
+    : gallery(p, 0, card.level === 0 ? p.allPhotos.length : p.photos.length, 'p-gallery');
+
+  return `<article class="project" id="p-${p.id}" data-anchor>
+    <div class="p-head">
+      <h2><button type="button" class="p-title" data-action="title" data-pid="${p.id}" aria-expanded="${card.level > 0}">
+        <span class="caret" aria-hidden="true">${card.level > 0 ? '−' : '+'}</span><span class="t">${esc(p.title)}</span></button></h2>
+      <p class="tagline">${esc(p.tagline)}</p>
+      <div class="tags">${p.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+      ${statsLine(p)}
+      <div class="p-controls">
+        ${segmented(LEVELS, card.level, `data-action="level" data-pid="${p.id}"`, 'small', 'Detail level')}
+        ${p.allPhotos.length ? `<button type="button" class="btn small" data-action="photos" data-pid="${p.id}" aria-pressed="${card.photos}">
+          ${card.photos ? 'Hide' : 'Show'} images &amp; captions (${p.allPhotos.length})</button>` : ''}
+      </div>
+    </div>
+    ${photoBlock}
+    ${card.level >= 1 ? `<ol class="chapters">${p.chapters.map(c => renderChapter(p, c, card)).join('')}</ol>` : ''}
+  </article>`;
+}
+
+function renderPortfolio() {
+  return `<section class="page">
+    <h1>Portfolio</h1>
+    <p class="sample">Sample content: bracketed text and striped photo tiles are placeholders to replace with your own.</p>
+    <div class="projects">${DATA.projects.map(renderProject).join('')}</div>
+  </section>`;
+}
+
+function renderFooter() {
+  const c = DATA.contact;
+  document.getElementById('footer').innerHTML = `
+    <div><h2>Contact</h2>
+      <div class="contact-list">
+        <a href="mailto:${esc(c.email)}"><span>Email</span>${esc(c.email)}</a>
+        <a href="https://${esc(c.linkedin)}"><span>LinkedIn</span>${esc(c.linkedin)}</a>
+        <a href="https://${esc(c.github)}"><span>GitHub</span>${esc(c.github)}</a>
+      </div>
+    </div>
+    <p class="mono" style="align-self:end">© ${new Date().getFullYear()} ${esc(DATA.name)}</p>`;
+}
+
+/* ============================================================
+   RENDER + ROUTING
+   ============================================================ */
+const VIEWS = { home: renderHome, portfolio: renderPortfolio, about: renderAbout, resume: renderResume };
+const app = document.getElementById('app');
+
+// Re-render, keeping the element the user clicked in the same place on screen.
+function render(anchorId) {
+  const before = anchorId && document.getElementById(anchorId)?.getBoundingClientRect().top;
+  app.innerHTML = VIEWS[state.view]();
+  document.querySelectorAll('.nav a').forEach(a => {
+    if (a.dataset.view === state.view) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
+  });
+  if (before != null) {
+    const el = document.getElementById(anchorId);
+    if (el) window.scrollBy({ top: el.getBoundingClientRect().top - before, behavior: 'instant' });
+  }
+}
+
+function scrollToId(id) {
+  requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }));
+}
+
+// Routes: #home #portfolio #about #resume, plus share links #p-<id> and #p-<id>-c<n>.
+function route() {
+  const hash = location.hash.slice(1) || 'home';
+  const m = hash.match(/^p-([a-z0-9-]+?)(?:-c(\d+))?$/);
+  const p = m && findProject(m[1]);
+  if (p) {
+    state.view = 'portfolio';
+    setLevel(p, 2);
+    render();
+    scrollToId(hash);
+    return;
+  }
+  state.view = VIEWS[hash] ? hash : 'home';
+  render();
+  window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   EVENTS (one delegated handler)
+   ============================================================ */
+const ACTIONS = {
+  level:  (b, p) => setLevel(p, +b.dataset.level),
+  title:  (b, p) => setLevel(p, cardOf(p).level > 0 ? 0 : 1),
+  photos: (b, p) => { cardOf(p).photos = !cardOf(p).photos; },
+};
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-action]');
+  if (!b) return;
+  const action = b.dataset.action;
+  const p = b.dataset.pid && findProject(b.dataset.pid);
+
+  if (ACTIONS[action]) {
+    ACTIONS[action](b, p);
+    render(b.closest('[data-anchor]')?.id);
+    return;
+  }
+  switch (action) {
+    case 'contact':
+      document.getElementById('contact').scrollIntoView({ block: 'start' });
+      break;
+    case 'photo':
+      e.preventDefault();
+      openLightbox(p, +b.dataset.idx, b);
+      break;
+  }
+});
+
+/* ============================================================
+   LIGHTBOX (steps through every photo in one project)
+   ============================================================ */
+const lb = { el: document.getElementById('lightbox'), p: null, idx: 0, returnFocus: null };
+
+function drawLightbox() {
+  const ph = lb.p.allPhotos[lb.idx];
+  const many = lb.p.allPhotos.length > 1;
+  lb.el.innerHTML = `<div class="lb-inner">
+    <div class="photo">${ph.src ? `<img src="${esc(ph.src)}" alt="${esc(ph.caption)}">` : '<span class="ph">PHOTO</span>'}</div>
+    <div class="lb-bar">
+      <span class="cap">${esc(ph.caption)} <span class="mono" style="color:#bbb">· ${esc(lb.p.title)} · ${lb.idx + 1}/${lb.p.allPhotos.length}</span></span>
+      ${many ? '<button type="button" data-lb="prev" aria-label="Previous photo">←</button><button type="button" data-lb="next" aria-label="Next photo">→</button>' : ''}
+      <button type="button" data-lb="close">Close</button>
+    </div></div>`;
+}
+function openLightbox(p, idx, from) {
+  Object.assign(lb, { p, idx, returnFocus: from });
+  drawLightbox();
+  lb.el.classList.add('open');
+  lb.el.querySelector('[data-lb="close"]').focus();
+}
+function closeLightbox() { lb.el.classList.remove('open'); lb.returnFocus?.focus(); }
+function stepLightbox(d) { const n = lb.p.allPhotos.length; lb.idx = (lb.idx + d + n) % n; drawLightbox(); lb.el.querySelector('[data-lb="close"]').focus(); }
+
+lb.el.addEventListener('click', e => {
+  const cmd = e.target.closest('[data-lb]')?.dataset.lb;
+  if (cmd === 'prev') stepLightbox(-1);
+  else if (cmd === 'next') stepLightbox(1);
+  else if (cmd === 'close' || e.target === lb.el) closeLightbox();
+  e.stopPropagation();
+});
+document.addEventListener('keydown', e => {
+  if (!lb.el.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') stepLightbox(-1);
+  if (e.key === 'ArrowRight') stepLightbox(1);
+});
+
+/* ============================================================
+   START
+   ============================================================ */
+document.getElementById('brand').textContent = DATA.name;
+renderFooter();
+window.addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
