@@ -56,52 +56,52 @@
   },
   "projects": [
     {
-      "id": "pointing-ui",
-      "title": "Projected Pointing Interface",
-      "tagline": "A wall-sized interface driven by pointing, tracked with two webcams.",
-      "tags": ["Computer vision", "Python", "HCI"],
-      "photos": [{ "caption": "Projector and stereo webcam rig" }, { "caption": "Interface projected on the wall" }],
+      "id": "differential hardening",
+      "title": "Differential Hardening of a Japanese-Style Blade",
+      "tagline": "differential hardening for curvature, hardness, and a visible temper line",
+      "tags": ["Material Science"],
+      "photos": [{ "caption": "[blade photo 1]" }, { "caption": "[blade photo 2]" }],
       "chapters": [
         {
-          "title": "Concept and goals",
-          "summary": "Turn any wall into a large display you control by pointing at it, with no touch surface or handheld device.",
+          "title": "XXX Concept and goals",
+          "summary": "XXX Turn any wall into a large display you control by pointing at it, with no touch surface or handheld device.",
           "body": [
-            "Large projected displays are usually driven with a mouse or a presenter remote, which separates the person from what they are pointing at. The goal was a general-purpose interface where pointing at the wall is the input.",
-            "Constraints: off-the-shelf webcams and a consumer projector, everything in Python, and a frame rate high enough that the cursor feels attached to the pointer. [Add your specific requirements and targets.]"
+            "XXX Large projected displays are usually driven with a mouse or a presenter remote, which separates the person from what they are pointing at. The goal was a general-purpose interface where pointing at the wall is the input.",
+            "XXX Constraints: off-the-shelf webcams and a consumer projector, everything in Python, and a frame rate high enough that the cursor feels attached to the pointer. [Add your specific requirements and targets.]"
           ],
           "photos": []
         },
         {
-          "title": "Stereo pointer tracking",
-          "summary": "Two webcams see the pointer from different angles. Triangulating the two views gives its position and direction in 3D.",
+          "title": "XXX Stereo pointer tracking",
+          "summary": "XXX Two webcams see the pointer from different angles. Triangulating the two views gives its position and direction in 3D.",
           "body": [
-            "Each camera detects the pointer in its own image. With both cameras calibrated, matching detections give two rays in space, and their closest point gives the pointer tip in 3D. Two points along the pointer give its direction.",
-            "Intersecting that direction with the wall plane gives the spot being pointed at, which becomes the cursor. [Describe the detection method, filtering, and how you handled noise and occlusion.]"
+            "XXX Each camera detects the pointer in its own image. With both cameras calibrated, matching detections give two rays in space, and their closest point gives the pointer tip in 3D. Two points along the pointer give its direction.",
+            "XXX Intersecting that direction with the wall plane gives the spot being pointed at, which becomes the cursor. [Describe the detection method, filtering, and how you handled noise and occlusion.]"
           ],
-          "photos": [{ "caption": "Camera views with detected pointer" }, { "caption": "Triangulation diagram" }]
+          "photos": [{ "caption": "[blade photo 3]" }, { "caption": "[blade photo 4]" }]
         },
         {
-          "title": "Calibrating cameras to the projector",
-          "summary": "A calibration step maps the wall plane into projector pixels, so the cursor lands where the user points.",
+          "title": "xxx Calibrating cameras to the projector",
+          "summary": "xxx A calibration step maps the wall plane into projector pixels, so the cursor lands where the user points.",
           "body": [
-            "The projector displays known targets on the wall. Locating them in both cameras ties camera space to projector pixels and defines the wall plane.",
-            "[Explain the calibration routine, how long it takes, and how well it holds up when the rig is bumped.]"
+            "xxx The projector displays known targets on the wall. Locating them in both cameras ties camera space to projector pixels and defines the wall plane.",
+            "xxx [Explain the calibration routine, how long it takes, and how well it holds up when the rig is bumped.]"
           ],
-          "photos": [{ "caption": "Calibration pattern on the wall" }]
+          "photos": [{ "caption": "[blade photo 5]" }]
         },
         {
-          "title": "Interface and results",
-          "summary": "A fullscreen pygame interface responds to the tracked pointer. [Add accuracy and latency results.]",
+          "title": "xxx Interface and results",
+          "summary": "xxx A fullscreen pygame interface responds to the tracked pointer. [Add accuracy and latency results.]",
           "body": [
-            "The interface is drawn fullscreen in pygame and sent through the projector. [Describe how selection works, e.g. dwell or gesture.]",
-            "[Add measured pointing accuracy, latency, and what you would change in a second version.]"
+            "xxx The interface is drawn fullscreen in pygame and sent through the projector. [Describe how selection works, e.g. dwell or gesture.]",
+            "xxx [Add measured pointing accuracy, latency, and what you would change in a second version.]"
           ],
-          "photos": [{ "caption": "Demo screenshot" }]
+          "photos": [{ "caption": "[blade photo 6]" }]
         }
       ]
     },
     {
-      "id": "parallax",
+      "id": "[PLACEHOLDER] parallax",
       "title": "Head-Tracked Parallax Window",
       "tagline": "A phone screen that behaves like a window, using the front camera to track the viewer's eyes.",
       "tags": ["Computer vision", "Graphics", "Android"],
@@ -136,7 +136,7 @@
       ]
     },
     {
-      "id": "desk-piano",
+      "id": "[PLACEHOLDER] desk-piano",
       "title": "Projected Desk Piano",
       "tagline": "A projector and webcam turn the edge of a desk into a playable keyboard.",
       "tags": ["Computer vision", "Audio", "Python"],
@@ -169,7 +169,7 @@
       ]
     },
     {
-      "id": "blade",
+      "id": "[PLACEHOLDER] blade",
       "title": "Clay-Quenched Blade",
       "tagline": "Differential hardening for curvature (sori) and a visible temper line (hamon).",
       "tags": ["Materials", "Metalwork", "Heat treatment"],
@@ -211,7 +211,7 @@
       ]
     },
     {
-      "id": "coaching",
+      "id": "[PLACEHOLDER] coaching",
       "title": "High School Robotics Coaching",
       "tagline": "Co-coaching Salesian's robotics team since it was founded.",
       "tags": ["Robotics", "Teaching"],
